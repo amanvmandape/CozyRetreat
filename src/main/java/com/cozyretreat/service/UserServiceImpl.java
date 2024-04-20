@@ -14,6 +14,8 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
     private final AppUserRepository userRepository;
+    private final JWTService jwtService;
+
     @Override
     public AppUser addUser(UserDTO dto) {
         AppUser user = mapToEntity(dto);
@@ -28,10 +30,9 @@ public class UserServiceImpl implements UserService {
             AppUser user = opt.get();
             if(BCrypt.checkpw(dto.getPassword(), user.getPassword()))
             {
-                return "Successfully Logged in";
+                return jwtService.generateToken(user);
             }
         }
-
         return null;
     }
 
