@@ -20,6 +20,11 @@ public class SecurityConfig {
         http.addFilterBefore(jwtResponseFilter, AuthorizationFilter.class);
         http.authorizeHttpRequests()
                 .requestMatchers("/app/user/login", "/app/user/add", "/app/property/listings/*").permitAll()
+                .requestMatchers("/app/reviews/property/*").hasRole("USER")
+                .requestMatchers("/app/reviews/delete").hasRole("ADMIN")
+                .requestMatchers("/app/country/*").hasRole("ADMIN")
+                .requestMatchers("/app/location/*").hasRole("ADMIN")
+                .requestMatchers("/app/property/*").hasRole("ADMIN")
                 .anyRequest().authenticated();
         return http.build();
     }

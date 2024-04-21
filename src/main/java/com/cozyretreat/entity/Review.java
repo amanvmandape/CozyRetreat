@@ -19,4 +19,10 @@ public class Review {
     @JoinColumn(name = "property_id")
     private Property property;
 
+    @ManyToOne
+    @JoinColumn(name = "app_user_id")
+    private AppUser appUser;
+
+    @Column(name = "rating", nullable = false)
+    private Integer rating;
 }
